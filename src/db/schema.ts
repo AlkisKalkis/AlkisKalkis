@@ -5,3 +5,8 @@ export const alkis = pgTable("alkis",{
     name: text("name").notNull(),
     price: integer("price").notNull(),
 })
+
+export const rawProduct = pgTable("rawProduct",{
+    id: integer("id").primaryKey(),
+    html: text("html").notNull(),
+})
