@@ -1,5 +1,5 @@
 import db from '../db/drizzle'
-import { asc, desc, eq, ilike } from 'drizzle-orm';
+import { asc, desc, eq, ilike, and, ne } from 'drizzle-orm';
 import { alkis, alkisCategory, category } from '../db/schema';
 
 async function heyo(): Promise<string> {
@@ -24,27 +24,37 @@ async function heyo(): Promise<string> {
                 hx-indicator=".htmx-indicator">
                 Kategori: 
                     <select name="category">
-                        <option value='bais'>bais</option>
+                        <option value=''></option>
                         {categories.map((category) => {
-                            return (<option value='category.categoryName'>{category.categoryName}</option>)
+                            return (<option>{category.categoryName}</option>)
                         })}
                     </select>
-            </form>
-            Søk: <input class="form-control" type="search" 
+
+                    Søk: <input class="form-control" type="search" 
                     name="search" placeholder="Begin Typing To Search Users..." 
                     hx-post="/test" 
-                    hx-trigger="input changed delay:0ms, search" 
+                    hx-trigger="change, input changed delay:0ms, search" 
                     hx-target="#search-results"
                     hx-swap="innerHTML"
                     hx-indicator=".htmx-indicator"></input>
-                {searchForProduct('')}
+            </form>
+            {searchForProduct('', '')}
+
+            
             </body>
         </html>)
 }
 
-async function searchForProduct(searchName:string): Promise<string> {
+async function searchForProduct(searchName:string, categorySearch: string): Promise<string> {
     console.log(searchName);
-    const allProducts = await db.select().from(alkis).where(ilike((alkis.name), "%"+searchName+"%")).leftJoin(alkisCategory, eq(alkisCategory.alkisId, alkis.id)).leftJoin(category, eq(category.id, alkisCategory.id)).orderBy(desc(alkis.alcoholByVolume));
+    const allProducts = await db.select().from(alkis)
+    .leftJoin(alkisCategory, eq(alkisCategory.alkisId, alkis.id))
+    .leftJoin(category, eq(category.id, alkisCategory.categoryId))
+    .where(and(
+        ilike((alkis.name), "%"+searchName+"%"),
+        eq(category.categoryName, categorySearch)
+        ))
+    .orderBy(desc(alkis.alcoholByVolume));
     
     return (<table id="search-results">
                     <tr>

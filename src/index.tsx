@@ -7,8 +7,8 @@ const app = new Elysia()
   .use(html())
   .get("/", () => "Hello Elysia")
   .get("/test", async () => heyo())
-  //.post("/test", (req: {body: {search: string}}) => searchForProduct(req.body.search))
-  .post("/test", (req) => (console.log(req)))
+  .post("/test", (req: {body: {search: string, category:string}}) => searchForProduct(req.body.search, req.body.category))
+  //.post("/test", (req) => (console.log(req)))
   .listen(3000);
 
 console.log(
