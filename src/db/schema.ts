@@ -7,19 +7,19 @@ export const alkis = pgTable("alkis", {
 })
 
 export const category = pgTable("category", {
-    id: bigint("id", { mode: "bigint" }).primaryKey(),
+    id: integer("id").primaryKey(),
     categoryName: text("categoryName").notNull(),
 })
 
 export const alkisCategory = pgTable("alkisCategory", {
-    id: bigint("id", { mode: "bigint" }).primaryKey(),
-    alkisId: integer("alkisId").references(() => alkis.id).notNull(),
+    id: integer("id").primaryKey(),
+    alkisId: bigint("alkisId", { mode: "bigint" }).references(() => alkis.id).notNull(),
     categoryId: integer("categoryId").references(() => category.id).notNull(),
 })
 
 export const priceHistory = pgTable("priceHistory", {
-    id: bigint("id", { mode: "bigint" }).primaryKey(),
-    alkisId: integer("alkisId").references(() => alkis.id).notNull(),
+    id: integer("id").primaryKey(),
+    alkisId: bigint("alkisId", { mode: "bigint" }).references(() => alkis.id).notNull(),
     priceKroner: integer("priceKroner").notNull(),
     priceOre: integer("priceOre").notNull(),
 })
