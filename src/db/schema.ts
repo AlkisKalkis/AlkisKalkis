@@ -1,3 +1,4 @@
+import { relations } from "drizzle-orm";
 import { integer, pgTable, text, bigint, boolean, unique, serial } from "drizzle-orm/pg-core";
 
 export const alkis = pgTable("alkis", {
@@ -8,10 +9,14 @@ export const alkis = pgTable("alkis", {
     volume: integer("volume").notNull(),
 })
 
+export const alkisRelations = relations(alkis, ({ many }) => ({ alkisCategory: many(alkisCategory) }))
+
 export const category = pgTable("category", {
     id: serial("id").primaryKey(),
     categoryName: text("categoryName").notNull().unique(),
 })
+
+export const categoryRelations = relations(category, ({ many }) => ({ alkisCategory: many(alkisCategory) }))
 
 export const alkisCategory = pgTable("alkisCategory", {
     id: serial("id").primaryKey(),
@@ -19,6 +24,11 @@ export const alkisCategory = pgTable("alkisCategory", {
     categoryId: integer("categoryId").references(() => category.id).notNull(),
 }, (table) => ({
     unq: unique().on(table.alkisId, table.categoryId),
+}))
+
+export const alkisCategoryRelations = relations(alkisCategory, ({ one }) => ({
+    alkis: one(alkis, { fields: [alkisCategory.alkisId], references: [alkis.id] }),
+    category: one(category, { fields: [alkisCategory.categoryId], references: [category.id] }),
 }))
 
 export const priceHistory = pgTable("priceHistory", {
