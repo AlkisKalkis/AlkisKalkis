@@ -1,77 +1,106 @@
 import db from '../db/drizzle'
-import { asc, desc, eq, ilike, and, ne } from 'drizzle-orm';
+import { SQL, desc, eq, sql } from 'drizzle-orm';
 import { alkis, alkisCategory, category } from '../db/schema';
 
 async function heyo(): Promise<string> {
-    const allProductsPromise = db.select().from(alkis).leftJoin(alkisCategory, eq(alkisCategory.alkisId, alkis.id)).leftJoin(category, eq(category.id, alkisCategory.id)).orderBy(desc(alkis.alcoholByVolume));
-    const categoriesPromise = db.select().from(category);
-    const [allProducts, categories] = await Promise.all([allProductsPromise, categoriesPromise])
-  
-  return (<html lang='en'>
-            <head>
-                <title>Hello World</title>
-                <script src="https://unpkg.com/htmx.org@1.9.12"></script>
-            </head>
-            <body>
+    const categories = await db.select().from(category);
+
+    return (<html lang='en'>
+        <head>
+            <title>Hello World</title>
+            <script src="https://unpkg.com/htmx.org@1.9.12"></script>
+        </head>
+        <body>
 
 
             <form
                 name="search"
-                hx-post="/test" 
-                hx-trigger="change" 
+                hx-post="/test"
+                hx-trigger="change"
                 hx-target="#search-results"
                 hx-swap="innerHTML"
                 hx-indicator=".htmx-indicator">
-                Kategori: 
-                    <select name="category">
-                        <option value=''></option>
-                        {categories.map((category) => {
-                            return (<option>{category.categoryName}</option>)
-                        })}
-                    </select>
+                Kategori:
+                <select name="category">
+                    <option value=''></option>
+                    {categories.map((category) => {
+                        return (<option>{category.categoryName}</option>)
+                    })}
+                </select>
 
-                    Søk: <input class="form-control" type="search" 
-                    name="search" placeholder="Begin Typing To Search Users..." 
-                    hx-post="/test" 
-                    hx-trigger="change, input changed delay:0ms, search" 
+                Søk: <input class="form-control" type="search"
+                    name="search" placeholder="Begin Typing To Search Users..."
+                    hx-post="/test"
+                    hx-trigger="change, input changed delay:0ms, search"
                     hx-target="#search-results"
                     hx-swap="innerHTML"
                     hx-indicator=".htmx-indicator"></input>
             </form>
             {searchForProduct('', '')}
 
-            
-            </body>
-        </html>)
+
+        </body>
+    </html>)
 }
 
-async function searchForProduct(searchName:string, categorySearch: string): Promise<string> {
-    console.log(searchName);
-    const allProducts = await db.select().from(alkis)
-    .leftJoin(alkisCategory, eq(alkisCategory.alkisId, alkis.id))
-    .leftJoin(category, eq(category.id, alkisCategory.categoryId))
-    .where(and(
-        ilike((alkis.name), "%"+searchName+"%"),
-        eq(category.categoryName, categorySearch)
-        ))
-    .orderBy(desc(alkis.alcoholByVolume));
-    
+async function searchForProduct(searchName: string, categorySearch: string): Promise<string> {
+    const query = buildSql(categorySearch, searchName)
+    const queryResponse = await db.execute(query)
+
+    const alkisRows = queryResponse.rows as { id: bigint, name: string, alcoholByVolume: number, price: number, volume: number, categories: string[] }[]
+
     return (<table id="search-results">
-                    <tr>
-                        <th>Navn</th>
-                        <th>Pris per alkohol</th>
-                        <th>Kategorier</th>
-                    </tr>
-    {allProducts.map((product) => {
+        <tr>
+            <th>Navn</th>
+            <th>Pris</th>
+            <th>Alkohol</th>
+            <th>Volum</th>
+            <th>Kategorier</th>
+        </tr>
+        {alkisRows.map((alkis) => {
             return (
-            <tr>
-                <td>{product.alkis.name}</td>
-                <td>{product.alkis.alcoholByVolume}</td>
-                <td>{product.category?.categoryName}</td>
-            </tr>)})
-    }
+                <tr>
+                    <td>{alkis.name}</td>
+                    <td>Kr {alkis.price / 100}</td>
+                    <td>{alkis.alcoholByVolume / 10}%</td>
+                    <td>{alkis.volume / 10}cl</td>
+                    <td>{alkis.categories.join(' - ')}</td>
+                </tr>)
+        })
+        }
     </table>
     )
 }
 
-export {heyo, searchForProduct};
+function buildSql(category: string, name: string) {
+    const sqlChunks: SQL[] = []
+    sqlChunks.push(sql`select *
+    from (select alkis.*, array_agg(category."categoryName") as categories
+          from "alkisCategory" as alkis_to_categories
+                   join alkis on alkis_to_categories."alkisId" = alkis.id
+                   join category on alkis_to_categories."categoryId" = category.id
+          group by alkis.id)`)
+
+    if (category || name) {
+        console.log('Adding where clause')
+        sqlChunks.push(sql`where`)
+    }
+    if (category) {
+        console.log('Adding category clause')
+        sqlChunks.push(sql`${category}=ANY(categories)`)
+    }
+    if (category && name) {
+        console.log('Adding AND')
+        sqlChunks.push(sql`AND`)
+    }
+    if (name) {
+        console.log('Adding name clause')
+        sqlChunks.push(sql`name ILIKE ${"%" + name + "%"}`)
+    }
+
+    sqlChunks.push(sql`order by price desc;`)
+
+    return sql.join(sqlChunks, sql` `)
+}
+
+export { heyo, searchForProduct };
