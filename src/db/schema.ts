@@ -1,24 +1,28 @@
-import { integer, pgTable, text, bigint, boolean } from "drizzle-orm/pg-core";
+import { integer, pgTable, text, bigint, boolean, unique, serial } from "drizzle-orm/pg-core";
 
 export const alkis = pgTable("alkis", {
     id: bigint("id", { mode: "bigint" }).primaryKey(),
     name: text("name").notNull(),
     alcoholByVolume: integer("alcoholByVolume").notNull(),
+    price: integer("price").notNull(),
+    volume: integer("volume").notNull(),
 })
 
 export const category = pgTable("category", {
-    id: integer("id").primaryKey(),
-    categoryName: text("categoryName").notNull(),
+    id: serial("id").primaryKey(),
+    categoryName: text("categoryName").notNull().unique(),
 })
 
 export const alkisCategory = pgTable("alkisCategory", {
-    id: integer("id").primaryKey(),
+    id: serial("id").primaryKey(),
     alkisId: bigint("alkisId", { mode: "bigint" }).references(() => alkis.id).notNull(),
     categoryId: integer("categoryId").references(() => category.id).notNull(),
-})
+}, (table) => ({
+    unq: unique().on(table.alkisId, table.categoryId),
+}))
 
 export const priceHistory = pgTable("priceHistory", {
-    id: integer("id").primaryKey(),
+    id: serial("id").primaryKey(),
     alkisId: bigint("alkisId", { mode: "bigint" }).references(() => alkis.id).notNull(),
     priceKroner: integer("priceKroner").notNull(),
     priceOre: integer("priceOre").notNull(),
