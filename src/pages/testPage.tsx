@@ -48,7 +48,7 @@ async function searchForProduct(searchName: string, categorySearch: string): Pro
     const query = buildSql(categorySearch, searchName)
     const queryResponse = await db.execute(query)
 
-    const alkisRows = queryResponse.rows as { id: bigint, name: string, alcoholByVolume: number, price: number, volume: number, categories: string[] }[]
+    const alkisRows = queryResponse.rows as { id: bigint, name: string, alcoholByVolume: number, price: number, volume: number, categories: string[], loc: string, image_link: string }[]
 
     return (<table id="search-results">
         <tr>
@@ -62,7 +62,7 @@ async function searchForProduct(searchName: string, categorySearch: string): Pro
         {alkisRows.map((alkis) => {
             return (
                 <tr>
-                    <td>{alkis.name}</td>
+                    <td><a href={alkis.loc} target="_blank"> {alkis.name}</a></td>
                     <td>Kr {alkis.price / 100}</td>
                     <td>{alkis.alcoholByVolume / 10}%</td>
                     <td>{alkis.volume / 10}cl</td>
@@ -89,11 +89,13 @@ function getPriceHistoryForProduct(productId: bigint, descendingTime: boolean){
 function buildSql(category: string, name: string) {
     const sqlChunks: SQL[] = []
     sqlChunks.push(sql`select *
-    from (select alkis.*, array_agg(category."categoryName") as categories
+    from (select alkis.*, array_agg(category."categoryName") as categories,
           from "alkisCategory" as alkis_to_categories
-                   join alkis on alkis_to_categories."alkisId" = alkis.id
-                   join category on alkis_to_categories."categoryId" = category.id
-          group by alkis.id)`)
+                join alkis on alkis_to_categories."alkisId" = alkis.id
+                join category on alkis_to_categories."categoryId" = category.id
+                join links on alkis.id = links.id
+        group by alkis.id
+          )`)
 
     if (category || name) {
         console.log('Adding where clause')
