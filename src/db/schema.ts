@@ -1,5 +1,5 @@
 import { relations } from "drizzle-orm";
-import { integer, pgTable, text, bigint, boolean, unique, serial } from "drizzle-orm/pg-core";
+import { integer, pgTable, text, bigint, boolean, unique, serial, timestamp } from "drizzle-orm/pg-core";
 
 export const alkis = pgTable("alkis", {
     id: bigint("id", { mode: "bigint" }).primaryKey(),
@@ -33,9 +33,9 @@ export const alkisCategoryRelations = relations(alkisCategory, ({ one }) => ({
 
 export const priceHistory = pgTable("priceHistory", {
     id: serial("id").primaryKey(),
+    timestamp: timestamp("timestamp").notNull(),
     alkisId: bigint("alkisId", { mode: "bigint" }).references(() => alkis.id).notNull(),
-    priceKroner: integer("priceKroner").notNull(),
-    priceOre: integer("priceOre").notNull(),
+    price: integer("price").notNull(),
 })
 
 export const rawProduct = pgTable("rawProduct", {
