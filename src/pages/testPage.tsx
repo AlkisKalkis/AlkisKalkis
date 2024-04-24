@@ -1,6 +1,7 @@
 import db from '../db/drizzle'
-import { SQL, desc, eq, sql } from 'drizzle-orm';
-import { alkis, alkisCategory, category } from '../db/schema';
+import { SQL, desc, asc, eq, sql } from 'drizzle-orm';
+import { alkis, alkisCategory, category, priceHistory } from '../db/schema';
+import { PgTableWithColumns } from 'drizzle-orm/pg-core';
 
 async function heyo(): Promise<string> {
     const categories = await db.select().from(category);
@@ -55,6 +56,7 @@ async function searchForProduct(searchName: string, categorySearch: string): Pro
             <th>Pris</th>
             <th>Alkohol</th>
             <th>Volum</th>
+            <th>Pris Per Liter Alkohol</th>
             <th>Kategorier</th>
         </tr>
         {alkisRows.map((alkis) => {
@@ -64,12 +66,24 @@ async function searchForProduct(searchName: string, categorySearch: string): Pro
                     <td>Kr {alkis.price / 100}</td>
                     <td>{alkis.alcoholByVolume / 10}%</td>
                     <td>{alkis.volume / 10}cl</td>
+                    <td>{((alkis.price/100)) / ((alkis.volume/100) * (alkis.alcoholByVolume/100))*100}</td>
                     <td>{alkis.categories.join(' - ')}</td>
                 </tr>)
         })
         }
     </table>
     )
+}
+
+function getPriceHistoryForProduct(productId: bigint, descendingTime: boolean){
+    const priceHistoryResults = db.select().from(priceHistory).where(eq(priceHistory.alkisId, productId))
+    if (descendingTime){
+        priceHistoryResults.orderBy(desc(priceHistory.timestamp))
+    }
+    else{
+        priceHistoryResults.orderBy(asc(priceHistory.timestamp))
+    }
+    return priceHistory;
 }
 
 function buildSql(category: string, name: string) {
