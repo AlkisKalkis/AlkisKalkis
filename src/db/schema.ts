@@ -7,6 +7,7 @@ export const alkis = pgTable("alkis", {
     alcoholByVolume: integer("alcoholByVolume").notNull(),
     price: integer("price").notNull(),
     volume: integer("volume").notNull(),
+    pricePerAlcohol: integer("pricePerAlcohol").notNull(),
 })
 
 export const alkisRelations = relations(alkis, ({ many }) => ({ alkisCategory: many(alkisCategory) }))
