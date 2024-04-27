@@ -2,7 +2,7 @@ import { sql, SQL } from "drizzle-orm";
 import { Alkis } from "./types/alkis";
 import db from "./db/drizzle";
 
-function buildSql(category: string, name: string) {
+function buildSql(category: string, name: string, page: number) {
   const sqlChunks: SQL[] = [];
   sqlChunks.push(sql`select *
     from (select alkis.*, array_agg(category."categoryName") as categories
@@ -28,16 +28,18 @@ function buildSql(category: string, name: string) {
     sqlChunks.push(sql`name ILIKE ${"%" + name + "%"}`);
   }
 
-  sqlChunks.push(sql`order by "pricePerAlcohol" asc;`);
-
+  sqlChunks.push(sql`order by "pricePerAlcohol" asc`);
+  sqlChunks.push(sql`limit ${50}`);
+  sqlChunks.push(sql`offset ${50*page};`);
   return sql.join(sqlChunks, sql` `);
 }
 
 export const GetAlkisRows = async (
   categorySearch: string,
-  searchName: string
+  searchName: string,
+  page: number,
 ): Promise<Alkis[]> => {
-  const query = buildSql(categorySearch, searchName);
+  const query = buildSql(categorySearch, searchName, page);
   const queryResponse = await db.execute(query);
 
   return queryResponse.rows as Alkis[];
