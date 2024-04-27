@@ -5,8 +5,9 @@ export const AlkisCard = (alkis: Alkis): JSX.Element => {
     <a
       href={`https://www.vinmonopolet.no/p/${alkis.id}`}
       class="flex flex-row items-center bg-white border border-gray-200 shadow md:max-w-xl hover:bg-gray-100 p-2"
+      target="_blank"
     >
-      <img class="object-cover w-16 h-44" src={getImage()} alt="" />
+      <img class="object-cover w-16" src={getImage(alkis.id)} alt="" />
       <div class="flex flex-col justify-between p-4 leading-normal">
         <h5 class="text-l tracking-tight text-gray-500">
           {alkis.categories.slice(0, 2).join(" - ")}
@@ -35,17 +36,6 @@ export const AlkisCard = (alkis: Alkis): JSX.Element => {
   );
 };
 
-const getImage = () => {
-  const urls = [
-    "https://bilder.vinmonopolet.no/cache/300x300-0/10055702-1.jpg",
-    "https://bilder.vinmonopolet.no/cache/300x300-0/10349902-1.jpg",
-    "https://bilder.vinmonopolet.no/cache/300x300-0/13003502-1.jpg",
-    "https://bilder.vinmonopolet.no/cache/300x300-0/7666202-1.jpg",
-    "https://bilder.vinmonopolet.no/cache/300x300-0/11258501-1.jpg",
-    "https://bilder.vinmonopolet.no/cache/300x300-0/14611801-1.jpg",
-    "https://bilder.vinmonopolet.no/cache/300x300-0/15992802-1.jpg",
-  ];
-
-  // Return a random image from urls
-  return urls[Math.floor(Math.random() * urls.length)];
+const getImage = (id: bigint) => {
+  return `https://bilder.vinmonopolet.no/cache/300x300-0/${id}-1.jpg`;
 };
