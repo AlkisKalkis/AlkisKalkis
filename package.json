@@ -7,6 +7,7 @@
   },
   "dependencies": {
     "@elysiajs/html": "^1.0.2",
+    "@elysiajs/static": "^1.0.3",
     "@kitajs/ts-html-plugin": "^4.0.1",
     "@neondatabase/serverless": "^0.9.1",
     "drizzle-orm": "^0.30.8",
@@ -14,7 +15,8 @@
   },
   "devDependencies": {
     "bun-types": "latest",
-    "drizzle-kit": "^0.20.17"
+    "drizzle-kit": "^0.20.17",
+    "tailwindcss": "^3.4.3"
   },
   "module": "src/index.js"
 }
