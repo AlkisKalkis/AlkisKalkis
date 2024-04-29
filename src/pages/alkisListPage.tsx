@@ -12,7 +12,7 @@ export const AlkisListPage = (): JSX.Element => {
               alt="AlkisKalkis logo"
             />
           </a>
-          <div class="inline-block -translate-x-1/2 -translate-y-1/2 z-50 absolute left-1/2 top-1/2 w-24 focus-within:w-[calc(100vw-20px)] transition-all duration-300 ease-in-out transform bg-emerald-900">
+          <div class="inline-block -translate-x-1/2 -translate-y-1/2 z-50 absolute left-1/2 top-1/2 w-36 focus-within:w-[calc(100vw-20px)] transition-all duration-300 ease-in-out transform bg-emerald-900">
             <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
               <svg
                 class="w-4 h-4 text-gray-400 peer-focus:text-gray-500"
@@ -35,7 +35,7 @@ export const AlkisListPage = (): JSX.Element => {
               type="text"
               id="search-navbar"
               name="name"
-              class="block w-full p-3 ps-10 text-sm text-gray-900 rounded-3xl bg-emerald-950 focus:bg-gray-50 transition-all duration-100"
+              class="block w-full p-3 ps-10 text-sm text-gray-200 focus:text-gray-900 rounded-3xl bg-emerald-950 focus:bg-gray-50 transition-all duration-100"
               hx-trigger="keyup changed delay:500ms"
               hx-get="/alkis"
               hx-target="#alkis-list"
@@ -43,7 +43,7 @@ export const AlkisListPage = (): JSX.Element => {
               placeholder=""
             />
           </div>
-          <div class="inline-block absolute right-3 h-10 w-10 overflow-ellipsis">
+          <div class="inline-block absolute right-3 h-10 w-10">
             <p class="text-2xl">🎛</p>️
           </div>
         </div>
