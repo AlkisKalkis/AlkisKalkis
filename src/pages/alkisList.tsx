@@ -36,7 +36,6 @@ export const AlkisList = async (query: Query): Promise<JSX.Element> => {
   const category = query?.category ?? "";
   const page = query?.page ?? 0;
 
-  console.log(query);
   const alkisRows: Alkis[] = await GetAlkisRows(
     category,
     name,
