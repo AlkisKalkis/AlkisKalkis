@@ -36,6 +36,7 @@ export const AlkisList = async (query: Query): Promise<JSX.Element> => {
   const category = query?.category ?? "";
   const page = query?.page ?? 0;
 
+  console.log(query);
   const alkisRows: Alkis[] = await GetAlkisRows(
     category,
     name,
@@ -43,22 +44,12 @@ export const AlkisList = async (query: Query): Promise<JSX.Element> => {
     resultsPerPage
   );
 
-  console.log(
-    "Received a query for:\n\tName:" +
-      name +
-      " Category: " +
-      category +
-      " Page: " +
-      page
-  );
   return (
-    <div>
-      <div class="">
-        {alkisRows.map((alkis) => {
-          return AlkisCard(alkis);
-        })}
-        {getMoreProductsDiv(page, category, name, alkisRows)}
-      </div>
-    </div>
+    <>
+      {alkisRows.map((alkis) => {
+        return AlkisCard(alkis);
+      })}
+      {getMoreProductsDiv(page, category, name, alkisRows)}
+    </>
   );
 };

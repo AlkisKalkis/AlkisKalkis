@@ -2,7 +2,7 @@ import { sql, SQL } from "drizzle-orm";
 import { Alkis } from "./types/alkis";
 import db from "./db/drizzle";
 
-export const resultsPerPage = 50;
+export const resultsPerPage = 48;
 
 function buildSql(
   category: string,
@@ -19,19 +19,15 @@ function buildSql(
           group by alkis.id)`);
 
   if (category || name) {
-    console.log("Adding where clause");
     sqlChunks.push(sql`where`);
   }
   if (category) {
-    console.log("Adding category clause");
     sqlChunks.push(sql`${category}=ANY(categories)`);
   }
   if (category && name) {
-    console.log("Adding AND");
     sqlChunks.push(sql`AND`);
   }
   if (name) {
-    console.log("Adding name clause");
     sqlChunks.push(sql`name ILIKE ${"%" + name + "%"}`);
   }
 
