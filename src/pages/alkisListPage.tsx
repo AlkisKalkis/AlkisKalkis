@@ -3,12 +3,7 @@ import { AlkisList } from "./alkisList";
 export const AlkisListPage = (): JSX.Element => {
   return (
     <div>
-      <form
-        method="get"
-        hx-get="/alkis"
-        hx-target="#alkis-list"
-        hx-swap="innerHTML"
-      >
+      <form hx-get="/alkis" hx-target="#alkis-list" hx-swap="innerHTML">
         <nav
           x-data="{ filtersOpen: false }"
           class="bg-emerald-900 fixed w-full z-20 top-0 start-0 "
@@ -58,7 +53,7 @@ export const AlkisListPage = (): JSX.Element => {
             <div
               x-show="filtersOpen"
               x-cloak
-              class="flex flex-col mt-3 bg-gray-50 border border-gray-100 rounded-lg p-4 w-full md:right-2 md:absolute md:w-[calc(50%-1rem)] xl:w-[calc(33.3%-1rem)]"
+              class="flex flex-col shadow mt-3 bg-gray-50 border border-gray-100 rounded-lg p-4 max-h-[70vh] overflow-y-scroll w-full md:right-2 md:absolute md:w-[calc(50%-1rem)] xl:w-[calc(33.3%-1rem)]"
             >
               <label
                 for="category"
@@ -81,6 +76,96 @@ export const AlkisListPage = (): JSX.Element => {
                 <option value="Øl">Øl</option>
                 <option value="Sider">Sider</option>
               </select>
+              <div class="flex flex-row justify-between w-full">
+                <div class="flex flex-col">
+                  <label
+                    for="minPrice"
+                    class="block mb-2 text-sm font-medium text-gray-900"
+                  >
+                    Pris fra
+                  </label>
+                  <input
+                    id="minPrice"
+                    name="minPrice"
+                    type="number"
+                    class="mb-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                  />
+                </div>
+                <div class="flex flex-col">
+                  <label
+                    for="maxPrice"
+                    class="block mb-2 text-sm font-medium text-gray-900"
+                  >
+                    Pris til
+                  </label>
+                  <input
+                    id="maxPrice"
+                    name="maxPrice"
+                    type="number"
+                    class="mb-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                  />
+                </div>
+              </div>
+              <div class="flex flex-row justify-between w-full">
+                <div class="flex flex-col">
+                  <label
+                    for="minAlcohol"
+                    class="block mb-2 text-sm font-medium text-gray-900"
+                  >
+                    Alkohol fra
+                  </label>
+                  <input
+                    id="minAlcohol"
+                    name="minAlcohol"
+                    type="number"
+                    class="mb-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                  />
+                </div>
+                <div class="flex flex-col">
+                  <label
+                    for="maxAlcohol"
+                    class="block mb-2 text-sm font-medium text-gray-900"
+                  >
+                    Alkohol til
+                  </label>
+                  <input
+                    id="maxAlcohol"
+                    name="maxAlcohol"
+                    type="number"
+                    class="mb-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                  />
+                </div>
+              </div>
+              <div class="flex flex-row justify-between w-full">
+                <div class="flex flex-col">
+                  <label
+                    for="minVolume"
+                    class="block mb-2 text-sm font-medium text-gray-900"
+                  >
+                    Volum fra
+                  </label>
+                  <input
+                    id="minVolume"
+                    name="minVolume"
+                    type="number"
+                    class="mb-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                  />
+                </div>
+                <div class="flex flex-col">
+                  <label
+                    for="maxVolume"
+                    class="block mb-2 text-sm font-medium text-gray-900"
+                  >
+                    Volum til
+                  </label>
+                  <input
+                    id="maxVolume"
+                    name="maxVolume"
+                    type="number"
+                    class="mb-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                  />
+                </div>
+              </div>
               <button class="text-white bg-emerald-700 hover:bg-emerald-800 focus:ring-4 focus:ring-emerald-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 w-36">
                 Søk
               </button>
@@ -99,6 +184,7 @@ export const AlkisListPage = (): JSX.Element => {
           height="100"
           viewbox="0 0 40 40"
           xmlns="http://www.w3.org/2000/svg"
+          class="htmx-request"
         >
           <circle
             cx="20"

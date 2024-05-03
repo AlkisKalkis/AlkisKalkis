@@ -4,7 +4,7 @@ import staticPlugin from "@elysiajs/static";
 import { BasePage } from "./pages/basePage";
 import { AlkisListPage } from "./pages/alkisListPage";
 import { AlkisList } from "./pages/alkisList";
-import { Query } from "./types/query";
+import { AlkisQueryParams } from "./types/alkisQueryParams";
 
 const app = new Elysia()
   .use(html())
@@ -13,15 +13,28 @@ const app = new Elysia()
       assets: "./src/public",
     })
   )
+  .onTransform((context) => {
+    for (const key in context.query) {
+      if (context.query[key] === "") {
+        context.query[key] = undefined;
+      }
+    }
+  })
   .get("/", () => BasePage(AlkisListPage()))
   .get(
     "/alkis",
-    async ({ query }: { query: Query }) => await AlkisList(query),
+    async ({ query }: { query: AlkisQueryParams }) => await AlkisList(query),
     {
       query: t.Object({
-        name: t.Optional(t.String({ default: "" })),
-        category: t.Optional(t.String({ default: "" })),
+        name: t.Optional(t.String()),
+        category: t.Optional(t.String()),
         page: t.Optional(t.Numeric({ default: 0 })),
+        minPrice: t.Optional(t.Numeric()),
+        maxPrice: t.Optional(t.Numeric()),
+        minAlcohol: t.Optional(t.Numeric()),
+        maxAlcohol: t.Optional(t.Numeric()),
+        minVolume: t.Optional(t.Numeric()),
+        maxVolume: t.Optional(t.Numeric()),
       }),
     }
   )
