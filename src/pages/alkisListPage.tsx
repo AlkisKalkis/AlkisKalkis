@@ -16,7 +16,7 @@ export const AlkisListPage = (): JSX.Element => {
                 alt="AlkisKalkis logo"
               />
             </a>
-            <div class="inline-block -translate-x-1/2 -translate-y-1/2 z-50 absolute left-1/2 top-1/2 w-36 focus-within:w-[calc(100vw-20px)] transition-all duration-300 ease-in-out transform bg-emerald-900">
+            <div class="inline-block -translate-x-1/2 -translate-y-1/2 z-50 absolute left-1/2 top-1/2 w-36 focus-within:w-[calc(100vw-20px)] md:w-2/3 md:focus-within:w-2/3 md:max-w-2xl transition-all duration-300 ease-in-out transform bg-emerald-900">
               <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
                 <svg
                   class="w-4 h-4 text-gray-400 peer-focus:text-gray-500"
@@ -77,7 +77,7 @@ export const AlkisListPage = (): JSX.Element => {
                 <option value="Sider">Sider</option>
               </select>
               <div class="flex flex-row justify-between w-full">
-                <div class="flex flex-col">
+                <div class="flex flex-col w-[calc(50%-1rem)]">
                   <label
                     for="minPrice"
                     class="block mb-2 text-sm font-medium text-gray-900"
@@ -91,7 +91,7 @@ export const AlkisListPage = (): JSX.Element => {
                     class="mb-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                   />
                 </div>
-                <div class="flex flex-col">
+                <div class="flex flex-col w-[calc(50%-1rem)]">
                   <label
                     for="maxPrice"
                     class="block mb-2 text-sm font-medium text-gray-900"
@@ -107,7 +107,7 @@ export const AlkisListPage = (): JSX.Element => {
                 </div>
               </div>
               <div class="flex flex-row justify-between w-full">
-                <div class="flex flex-col">
+                <div class="flex flex-col w-[calc(50%-1rem)]">
                   <label
                     for="minAlcohol"
                     class="block mb-2 text-sm font-medium text-gray-900"
@@ -121,7 +121,7 @@ export const AlkisListPage = (): JSX.Element => {
                     class="mb-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                   />
                 </div>
-                <div class="flex flex-col">
+                <div class="flex flex-col w-[calc(50%-1rem)]">
                   <label
                     for="maxAlcohol"
                     class="block mb-2 text-sm font-medium text-gray-900"
@@ -137,7 +137,7 @@ export const AlkisListPage = (): JSX.Element => {
                 </div>
               </div>
               <div class="flex flex-row justify-between w-full">
-                <div class="flex flex-col">
+                <div class="flex flex-col w-[calc(50%-1rem)]">
                   <label
                     for="minVolume"
                     class="block mb-2 text-sm font-medium text-gray-900"
@@ -151,7 +151,7 @@ export const AlkisListPage = (): JSX.Element => {
                     class="mb-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                   />
                 </div>
-                <div class="flex flex-col">
+                <div class="flex flex-col w-[calc(50%-1rem)]">
                   <label
                     for="maxVolume"
                     class="block mb-2 text-sm font-medium text-gray-900"
