@@ -53,7 +53,7 @@ export const AlkisListPage = (): JSX.Element => {
             <div
               x-show="filtersOpen"
               x-cloak
-              class="flex flex-col shadow mt-3 bg-gray-50 border border-gray-100 rounded-lg p-4 max-h-[70vh] overflow-y-scroll w-full md:right-2 md:absolute md:w-[calc(50%-1rem)] xl:w-[calc(33.3%-1rem)]"
+              class="flex flex-col shadow mt-3 bg-gray-100/50 backdrop-blur-xl border border-gray-100 rounded-lg p-4 max-h-[70vh] overflow-y-scroll w-full md:right-2 md:absolute md:w-[calc(50%-1rem)] xl:w-[calc(33.3%-1rem)]"
             >
               <label
                 for="category"
