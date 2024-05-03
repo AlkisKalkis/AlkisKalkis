@@ -1,0 +1,3 @@
+buntern.duckdns.org {
+    reverse_proxy alkis-kalkis:3000
+}
