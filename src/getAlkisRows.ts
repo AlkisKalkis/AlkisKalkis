@@ -4,7 +4,12 @@ import db from "./db/drizzle";
 
 export const resultsPerPage = 50;
 
-function buildSql(category: string, name: string, page: number, resultsPerPage: number) {
+function buildSql(
+  category: string,
+  name: string,
+  page: number,
+  resultsPerPage: number
+) {
   const sqlChunks: SQL[] = [];
   sqlChunks.push(sql`select *
     from (select alkis.*, array_agg(category."categoryName") as categories
@@ -32,7 +37,7 @@ function buildSql(category: string, name: string, page: number, resultsPerPage: 
 
   sqlChunks.push(sql`order by "pricePerAlcohol" asc`);
   sqlChunks.push(sql`limit ${resultsPerPage}`);
-  sqlChunks.push(sql`offset ${resultsPerPage*page};`);
+  sqlChunks.push(sql`offset ${resultsPerPage * page};`);
   return sql.join(sqlChunks, sql` `);
 }
 
