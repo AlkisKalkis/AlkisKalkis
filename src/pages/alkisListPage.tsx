@@ -39,16 +39,16 @@ export const AlkisListPage = (): JSX.Element => {
                 type="text"
                 id="search-navbar"
                 name="name"
-                class="block w-full p-3 ps-10 text-sm text-gray-200 focus:text-gray-900 rounded-3xl bg-emerald-950 focus:bg-gray-50 transition-all duration-100"
+                class="block w-full p-3 ps-10 text-sm text-gray-200 focus:text-gray-900 rounded-lg bg-gray-50/20 focus:bg-gray-50 transition-all duration-100"
                 placeholder=""
               />
             </div>
             <button
               x-on:click="filtersOpen = !filtersOpen"
               type="button"
-              class="inline-block absolute right-3 h-10 w-10"
+              class="inline-block absolute right-3 h-10 w-16 bg-gray-50/20 rounded-lg align-middle p-3 text-gray-100 drop-shadow font-medium text-sm"
             >
-              <p class="text-4xl">🎛</p>️
+              <p>Filter️</p>️
             </button>
             <div
               x-show="filtersOpen"

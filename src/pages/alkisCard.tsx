@@ -30,7 +30,7 @@ export const AlkisCard = (alkis: Alkis): JSX.Element => {
         <a
           href={`https://www.vinmonopolet.no/p/${alkis.id}`}
           target="_blank"
-          class="inline-block bg-emerald-900 w-36 text-gray-100 p-2 mt-2 mb-0 rounded-md text-left hover:bg-emerald-800"
+          class="block bg-emerald-700 w-fit text-gray-100 p-2 mt-2 mb-0 rounded-md text-left hover:bg-emerald-800 font-medium text-sm"
         >
           Til Vinmonopolet
         </a>
