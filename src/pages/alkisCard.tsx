@@ -11,7 +11,7 @@ export const AlkisCard = (alkis: Alkis): JSX.Element => {
         <h5 class="mb-2 text-xl tracking-tight text-gray-900">{alkis.name}</h5>
         <div class="flex flex-row content-start">
           <p class="text-2xl font-bold text-gray-900">
-            Kr {(alkis.price / 100).toFixed(2).toLocaleString("no")}
+            Kr {(alkis.price / 100).toLocaleString("no", {minimumFractionDigits: 2,maximumFractionDigits: 2})}
           </p>
           <p class="ml-2 font-bold self-end text-gray-600">
             {(alkis.volume / 10).toLocaleString("no")} cl
@@ -23,7 +23,7 @@ export const AlkisCard = (alkis: Alkis): JSX.Element => {
 
         <p class="font-normal text-gray-700">
           <span class="text-[#B91048] font-black text-xl">
-            Kr {(alkis.pricePerAlcohol / 100).toFixed(2).toLocaleString("no")}
+            Kr {(alkis.pricePerAlcohol / 100).toLocaleString("no", {minimumFractionDigits: 2,maximumFractionDigits: 2})}
           </span>{" "}
           per liter ren alkohol
         </p>
