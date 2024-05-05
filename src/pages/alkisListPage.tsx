@@ -72,6 +72,8 @@ export const AlkisListPage = (): JSX.Element => {
                       Pris Per Alkohol (lav - høy)
                     </option>
                     <option value="ppa-hl">Pris Per Alkohol (høy - lav)</option>
+                    <option value="price-lh">Pris (lav - høy)</option>
+                    <option value="price-hl">Pris (høy - lav)</option>
                   </select>
                 </div>
                 <div class="flex flex-col w-[calc(50%-1rem)]">
@@ -105,7 +107,7 @@ export const AlkisListPage = (): JSX.Element => {
                     for="minPrice"
                     class="block mb-2 text-sm font-medium text-gray-900"
                   >
-                    Pris fra
+                    Pris fra (NOK)
                   </label>
                   <input
                     id="minPrice"
@@ -119,7 +121,7 @@ export const AlkisListPage = (): JSX.Element => {
                     for="maxPrice"
                     class="block mb-2 text-sm font-medium text-gray-900"
                   >
-                    Pris til
+                    Pris til (NOK)
                   </label>
                   <input
                     id="maxPrice"
@@ -135,7 +137,7 @@ export const AlkisListPage = (): JSX.Element => {
                     for="minAlcohol"
                     class="block mb-2 text-sm font-medium text-gray-900"
                   >
-                    Alkohol fra
+                    Alkohol fra (%)
                   </label>
                   <input
                     id="minAlcohol"
@@ -149,7 +151,7 @@ export const AlkisListPage = (): JSX.Element => {
                     for="maxAlcohol"
                     class="block mb-2 text-sm font-medium text-gray-900"
                   >
-                    Alkohol til
+                    Alkohol til (%)
                   </label>
                   <input
                     id="maxAlcohol"
@@ -165,7 +167,7 @@ export const AlkisListPage = (): JSX.Element => {
                     for="minVolume"
                     class="block mb-2 text-sm font-medium text-gray-900"
                   >
-                    Volum fra
+                    Volum fra (ml)
                   </label>
                   <input
                     id="minVolume"
@@ -179,7 +181,7 @@ export const AlkisListPage = (): JSX.Element => {
                     for="maxVolume"
                     class="block mb-2 text-sm font-medium text-gray-900"
                   >
-                    Volum til
+                    Volum til (ml)
                   </label>
                   <input
                     id="maxVolume"
