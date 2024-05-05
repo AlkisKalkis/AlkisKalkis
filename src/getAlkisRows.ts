@@ -29,7 +29,9 @@ function buildSql(query: AlkisQueryParams, resultsPerPage: number) {
   if (whereChunks.length > 0) sqlChunks.push(sql`where`);
   sqlChunks.push(sql.join(whereChunks, sql` and `));
 
-  sqlChunks.push(sql`order by "pricePerAlcohol" asc`);
+  if (query.sortBy == "ppa-lh") sqlChunks.push(sql`order by "pricePerAlcohol" asc`);
+  else if (query.sortBy == "ppa-hl") sqlChunks.push(sql`order by "pricePerAlcohol" desc`);
+  else console.log("Error: Unknown 'sortBy' property.")
   sqlChunks.push(sql`limit ${resultsPerPage}`);
   sqlChunks.push(sql`offset ${resultsPerPage * (query.page ?? 0)};`);
   return sql.join(sqlChunks, sql` `);
