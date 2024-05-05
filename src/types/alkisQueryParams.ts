@@ -1,6 +1,7 @@
 export type AlkisQueryParams = {
     name?: string;
     category?: string;
+    sortBy?: string;
     page?: number;
     minPrice?: number;
     maxPrice?: number;

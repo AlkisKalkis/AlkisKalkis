@@ -55,27 +55,50 @@ export const AlkisListPage = (): JSX.Element => {
               x-cloak
               class="flex flex-col shadow mt-3 bg-gray-100/50 backdrop-blur-xl border border-gray-100 rounded-lg p-4 max-h-[70vh] overflow-y-scroll w-full md:right-2 md:absolute md:w-[calc(50%-1rem)] xl:w-[calc(33.3%-1rem)]"
             >
-              <label
-                for="category"
-                class="block mb-2 text-sm font-medium text-gray-900"
-              >
-                Kategori
-              </label>
-              <select
-                id="category"
-                name="category"
-                class="mb-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-              >
-                <option value="" selected>
-                  Velg en kategori
-                </option>
-                <option value="Rødvin">Rødvin</option>
-                <option value="Hvitvin">Hvitvin</option>
-                <option value="Rosévin">Rosévin</option>
-                <option value="Brennevin">Brennevin</option>
-                <option value="Øl">Øl</option>
-                <option value="Sider">Sider</option>
-              </select>
+               <div class="flex flex-row justify-between w-full">
+                <div class="flex flex-col w-[calc(50%-1rem)]">
+                  <label
+                    for="sortBy"
+                    class="block mb-2 text-sm font-medium text-gray-900"
+                  >
+                    Sorter Etter
+                  </label>
+                  <select
+                    id="sortBy"
+                    name="sortBy"
+                    class="mb-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                  >
+                    <option value="ppa-lh" selected>
+                      Pris Per Alkohol (lav - høy)
+                    </option>
+                    <option value="ppa-hl">Pris Per Alkohol (høy - lav)</option>
+                  </select>
+                </div>
+                <div class="flex flex-col w-[calc(50%-1rem)]">
+                  <label
+                    for="category"
+                    class="block mb-2 text-sm font-medium text-gray-900"
+                  >
+                    Kategori
+                  </label>
+                  <select
+                    id="category"
+                    name="category"
+                    class="mb-4 bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                  >
+                    <option value="" selected>
+                      Alle Kategorier
+                    </option>
+                    <option value="Rødvin">Rødvin</option>
+                    <option value="Hvitvin">Hvitvin</option>
+                    <option value="Rosévin">Rosévin</option>
+                    <option value="Brennevin">Brennevin</option>
+                    <option value="Øl">Øl</option>
+                    <option value="Sider">Sider</option>
+                  </select>
+                </div>
+              </div>
+
               <div class="flex flex-row justify-between w-full">
                 <div class="flex flex-col w-[calc(50%-1rem)]">
                   <label

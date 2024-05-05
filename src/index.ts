@@ -28,6 +28,7 @@ const app = new Elysia()
       query: t.Object({
         name: t.Optional(t.String()),
         category: t.Optional(t.String()),
+        sortBy: t.Optional(t.String()),
         page: t.Optional(t.Numeric({ default: 0 })),
         minPrice: t.Optional(t.Numeric()),
         maxPrice: t.Optional(t.Numeric()),
